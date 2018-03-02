@@ -1,0 +1,27 @@
+.Grid {
+  border: 5px solid black;
+  box-sizing: content-box;
+  margin: 20px auto;
+  position: relative;
+
+  --grid-size: 500px;
+  --cell-size: calc(var(--grid-size) / 4);
+  width: var(--grid-size);
+  height: var(--grid-size);
+}
+
+.Grid .Square {
+  border: 2px solid #9e9e9e;
+  border-radius: 20px;
+  box-sizing: border-box;
+  font-size: calc(var(--cell-size) / var(--num-length));
+  line-height: var(--cell-size);
+  vertical-align: middle;
+
+  position: absolute;
+  left: calc(var(--x) * var(--cell-size));
+  top: calc(var(--y) * var(--cell-size));
+  width: var(--cell-size);
+  height: var(--cell-size);
+  transition: top 0.2s, left 0.2s;
+}
