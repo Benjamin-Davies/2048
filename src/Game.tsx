@@ -8,53 +8,82 @@ import {
   randomStartValue
 } from './util';
 
+/**
+ * One square
+ */
 interface Square {
-  key: number;
+  key: number; // Used for animations (implemented in css)
   value: number;
   x: number;
   y: number;
 }
 
-enum MoveType {
+/**
+ * One square without a position
+ */
+interface PositionlessSquare {
+  key: number;
+  value: number;
+}
+
+/**
+ * Map of positions to position-less squares
+ */
+interface SquareMap {
+  [_: string]: PositionlessSquare;
+}
+
+/**
+ * Direction of move
+ */
+enum Direction {
   Up,
   Right,
   Down,
   Left
 }
 
-export default class Game extends React.Component<
-  {},
-  { squares: Square[]; lastKey: number }
-> {
+/**
+ * State of game
+ */
+interface State {
+  squares: Square[];
+  keyAcc: number;
+}
+
+/**
+ * Component for the main game area
+ */
+export default class Game extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
 
-    this.state = { squares: [], lastKey: 0 };
+    this.state = { squares: [], keyAcc: 0 };
   }
 
   public componentDidMount() {
     document.addEventListener('keydown', e => {
-      let type: MoveType;
+      let dir: Direction;
 
       switch (e.key) {
         case 'ArrowUp':
-          type = MoveType.Up;
+          dir = Direction.Up;
           break;
         case 'ArrowRight':
-          type = MoveType.Right;
+          dir = Direction.Right;
           break;
         case 'ArrowDown':
-          type = MoveType.Down;
+          dir = Direction.Down;
           break;
         case 'ArrowLeft':
-          type = MoveType.Left;
+          dir = Direction.Left;
           break;
         default:
           return;
       }
 
       e.preventDefault();
-      this.move(type);
+      this.move(dir);
     });
 
     this.reset();
@@ -87,6 +116,9 @@ export default class Game extends React.Component<
     );
   }
 
+  /**
+   * Reset the squares to a random starting state
+   */
   private reset() {
     const s1: Square = {
       key: 0,
@@ -108,17 +140,22 @@ export default class Game extends React.Component<
       s2.y = randomSquare();
     }
 
-    this.setState({ squares: [s1, s2], lastKey: 1 });
+    this.setState({ squares: [s1, s2], keyAcc: 1 });
   }
 
-  private move(type: MoveType) {
-    let lastKey = this.state.lastKey;
+  /**
+   * Make a move
+   * @param dir Direction of the move
+   */
+  private move(dir: Direction) {
+    let keyAcc = this.state.keyAcc;
 
-    const map: { [_: string]: { value: number; key: number } } = {};
+    const map: SquareMap = {};
     this.state.squares.forEach(
       ({ x, y, value, key }) => (map[coords(x, y)] = { value, key })
     );
 
+    // Find all the empty squares
     const emptySquares = [];
     for (let x = 0; x < 4; x++) {
       for (let y = 0; y < 4; y++) {
@@ -128,9 +165,10 @@ export default class Game extends React.Component<
       }
     }
 
+    // Generate new square if there is room
     if (emptySquares.length > 0) {
-      lastKey++;
-      const key = lastKey;
+      keyAcc++;
+      const key = keyAcc;
       const value = randomStartValue();
       const { x, y } = emptySquares[
         Math.floor(emptySquares.length * Math.random())
@@ -145,10 +183,18 @@ export default class Game extends React.Component<
         const { key, value } = map[k];
         const [x, y] = deconCoords(k);
 
-        squares.push({ key, value, x, y });
+        squares.push({
+          key,
+          value,
+          x,
+          y
+        });
       }
     }
 
-    this.setState({ squares, lastKey });
+    this.setState({
+      keyAcc,
+      squares
+    });
   }
 }
