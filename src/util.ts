@@ -1,8 +1,28 @@
+import { Direction } from './Game';
+
 /**
  * Convert coordinates into a string for the key of a SquareMap
  */
 export function coords(x: number, y: number) {
   return `${x},${y}`;
+}
+
+/**
+ * Convert coordinates into a string for the key of a SquareMap using a direction
+ */
+export function coordsDir(x: number, y: number, dir: Direction) {
+  switch (dir) {
+    case Direction.Up:
+      return coords(x, y);
+    case Direction.Right:
+      return coords(3 - y, x);
+    case Direction.Down:
+      return coords(x, 3 - y);
+    case Direction.Left:
+      return coords(y, x);
+    default:
+      return '';
+  }
 }
 
 /**

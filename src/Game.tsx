@@ -2,6 +2,7 @@ import * as React from 'react';
 import './Game.css';
 import {
   coords,
+  coordsDir,
   deconCoords,
   getSquareColor,
   randomSquare,
@@ -36,7 +37,7 @@ interface SquareMap {
 /**
  * Direction of move
  */
-enum Direction {
+export enum Direction {
   Up,
   Right,
   Down,
@@ -155,6 +156,46 @@ export default class Game extends React.Component<{}, State> {
       ({ x, y, value, key }) => (map[coords(x, y)] = { value, key })
     );
 
+    // Move squares
+    for (let col = 0; col < 4; col++) {
+      for (let row = 0; row < 4; row++) {
+        let i = row;
+        let square: PositionlessSquare | undefined;
+
+        // Find a square to go into that cell
+        for (; i < 4; i++) {
+          const c = coordsDir(col, i, dir);
+          if (map.hasOwnProperty(c)) {
+            square = map[c];
+            delete map[c];
+            i++;
+            break;
+          }
+        }
+
+        // Check if there are any more in the row
+        for (; i < 4; i++) {
+          const c = coordsDir(col, i, dir);
+          if (map.hasOwnProperty(c)) {
+            // If it is the same then merge
+            if (
+              typeof square !== 'undefined' &&
+              map[c].value === square.value
+            ) {
+              square = { key: square.key, value: square.value * 2 };
+              delete map[c];
+            }
+            break;
+          }
+        }
+
+        if (typeof square !== 'undefined') {
+          const c = coordsDir(col, row, dir);
+          map[c] = square;
+        }
+      }
+    }
+
     // Find all the empty squares
     const emptySquares = [];
     for (let x = 0; x < 4; x++) {
@@ -191,6 +232,8 @@ export default class Game extends React.Component<{}, State> {
         });
       }
     }
+
+    squares.sort((a, b) => a.key - b.key);
 
     this.setState({
       keyAcc,
