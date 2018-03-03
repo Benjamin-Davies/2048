@@ -23,5 +23,5 @@
   top: calc(var(--y) * var(--cell-size));
   width: var(--cell-size);
   height: var(--cell-size);
-  transition: top 0.2s, left 0.2s;
+  transition: top 0.1s, left 0.1s;
 }
