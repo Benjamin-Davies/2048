@@ -2,6 +2,7 @@
   "name": "2048",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://benjamin-davies.github.io/2048/",
   "dependencies": {
     "@types/react": "^16.0.40",
     "@types/react-dom": "^16.0.4",
@@ -12,8 +13,13 @@
     "typescript": "^2.7.2"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test"
+  },
+  "devDependencies": {
+    "gh-pages": "^1.1.0"
   }
 }
