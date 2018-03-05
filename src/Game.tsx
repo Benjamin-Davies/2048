@@ -50,6 +50,7 @@ export enum Direction {
 interface State {
   squares: Square[];
   keyAcc: number;
+  gameover: boolean;
 }
 
 /**
@@ -59,11 +60,15 @@ export default class Game extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
 
-    this.state = { squares: [], keyAcc: 0 };
+    this.state = { squares: [], keyAcc: 0, gameover: false };
   }
 
   public componentDidMount() {
     document.addEventListener('keydown', e => {
+      if (this.state.gameover) {
+        return;
+      }
+
       let dir: Direction;
 
       switch (e.key) {
@@ -112,6 +117,27 @@ export default class Game extends React.Component<{}, State> {
               {s.value}
             </div>
           ))}
+          <div
+            className={'Gameover'}
+            style={{ display: this.state.gameover ? 'block' : 'none' }}
+          >
+            <div className="container">
+              <div className="card" style={{ paddingTop: 10 }}>
+                <div className="container">
+                  <h3>Game Over!</h3>
+                  <p>Better luck next-time</p>
+                </div>
+                <p style={{ textAlign: 'right' }}>
+                  <button
+                    className="btn-flat blue-text"
+                    onClick={() => this.reset()}
+                  >
+                    try again
+                  </button>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -141,7 +167,7 @@ export default class Game extends React.Component<{}, State> {
       s2.y = randomSquare();
     }
 
-    this.setState({ squares: [s1, s2], keyAcc: 1 });
+    this.setState({ squares: [s1, s2], keyAcc: 1, gameover: false });
   }
 
   /**
@@ -248,5 +274,41 @@ export default class Game extends React.Component<{}, State> {
       keyAcc,
       squares
     });
+
+    this.checkGameover(map);
+  }
+
+  /**
+   * Checks if there are any moves left
+   * If there are none then setState gameover to true
+   * @param map A map of the current game-board
+   */
+  private checkGameover(map: SquareMap) {
+    if (this.state.gameover) {
+      return;
+    }
+
+    for (let x = 0; x < 4; x++) {
+      for (let y = 0; y < 4; y++) {
+        if (!map.hasOwnProperty(coords(x, y))) {
+          return;
+        }
+      }
+    }
+
+    for (let x = 0; x < 3; x++) {
+      for (let y = 0; y < 3; y++) {
+        const current = map[coords(x, y)];
+
+        if (map[coords(x + 1, y)].value === current.value) {
+          return;
+        }
+        if (map[coords(x, y + 1)].value === current.value) {
+          return;
+        }
+      }
+    }
+
+    this.setState({ gameover: true });
   }
 }
