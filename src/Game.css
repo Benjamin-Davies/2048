@@ -1,4 +1,4 @@
-* {
+body {
   --grid-size: 500px;
   --cell-size: calc(var(--grid-size) / 4);
 }
