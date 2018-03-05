@@ -150,6 +150,7 @@ export default class Game extends React.Component<{}, State> {
    */
   private move(dir: Direction) {
     let keyAcc = this.state.keyAcc;
+    let moved = false;
 
     const map: SquareMap = {};
     this.state.squares.forEach(
@@ -168,6 +169,9 @@ export default class Game extends React.Component<{}, State> {
           if (map.hasOwnProperty(c)) {
             square = map[c];
             delete map[c];
+            if (i > row) {
+              moved = true;
+            }
             i++;
             break;
           }
@@ -184,6 +188,7 @@ export default class Game extends React.Component<{}, State> {
             ) {
               square = { key: square.key, value: square.value * 2 };
               delete map[c];
+              moved = true;
             }
             break;
           }
@@ -194,6 +199,10 @@ export default class Game extends React.Component<{}, State> {
           map[c] = square;
         }
       }
+    }
+
+    if (!moved) {
+      return;
     }
 
     // Find all the empty squares
