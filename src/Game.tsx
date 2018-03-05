@@ -51,6 +51,7 @@ interface State {
   squares: Square[];
   keyAcc: number;
   gameover: boolean;
+  score: number;
 }
 
 /**
@@ -60,7 +61,7 @@ export default class Game extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
 
-    this.state = { squares: [], keyAcc: 0, gameover: false };
+    this.state = { squares: [], keyAcc: 0, gameover: false, score: 0 };
   }
 
   public componentDidMount() {
@@ -98,11 +99,14 @@ export default class Game extends React.Component<{}, State> {
   public render() {
     return (
       <div className="container">
-        <p>
+        <div className="GameMenu">
+          <div className="text">
+            <span className="left">{this.state.score}</span>
+          </div>
           <button className="btn" onClick={() => this.reset()}>
             Restart
           </button>
-        </p>
+        </div>
         <div className="Grid grey lighten-3">
           {this.state.squares.map(s => (
             <div
@@ -167,7 +171,12 @@ export default class Game extends React.Component<{}, State> {
       s2.y = randomSquare();
     }
 
-    this.setState({ squares: [s1, s2], keyAcc: 1, gameover: false });
+    this.setState({
+      gameover: false,
+      keyAcc: 1,
+      score: 0,
+      squares: [s1, s2]
+    });
   }
 
   /**
@@ -176,6 +185,7 @@ export default class Game extends React.Component<{}, State> {
    */
   private move(dir: Direction) {
     let keyAcc = this.state.keyAcc;
+    let score = this.state.score;
     let moved = false;
 
     const map: SquareMap = {};
@@ -212,6 +222,7 @@ export default class Game extends React.Component<{}, State> {
               typeof square !== 'undefined' &&
               map[c].value === square.value
             ) {
+              score += square.value * 2;
               square = { key: square.key, value: square.value * 2 };
               delete map[c];
               moved = true;
@@ -272,6 +283,7 @@ export default class Game extends React.Component<{}, State> {
 
     this.setState({
       keyAcc,
+      score,
       squares
     });
 
