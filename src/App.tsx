@@ -8,23 +8,17 @@ class App extends React.Component {
       <div>
         <header className="center container">
           <h1>2048</h1>
+        </header>
+        <main className="center">
+          <Game />
+        </main>
+        <section className="container">
           <p>
             This is not an original game. I made this game to expand my skills,
             not to claim credit for the idea. You are welcome to play this game
             and to share my work.
           </p>
-          <p>
-            <a className="btn-flat" href="https://benjamin-davies.github.io/">
-              My Site
-            </a>
-            <a className="btn-flat" href="https://github.com/benjamin-davies/">
-              My GitHub profile
-            </a>
-          </p>
-        </header>
-        <main className="center">
-          <Game />
-        </main>
+        </section>
         <footer className="page-footer blue">
           <div className="container">
             <div className="row">
@@ -40,6 +34,22 @@ class App extends React.Component {
               <div className="col l4 offset-l2 s12">
                 <h5 className="white-text">Links</h5>
                 <ul>
+                  <li>
+                    <a
+                      className="grey-text text-lighten-3"
+                      href="https://benjamin-davies.github.io/"
+                    >
+                      My Site
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="grey-text text-lighten-3"
+                      href="https://github.com/benjamin-davies/"
+                    >
+                      My GitHub profile
+                    </a>
+                  </li>
                   <li>
                     <a
                       className="grey-text text-lighten-3"
