@@ -58,6 +58,8 @@ interface State {
  * Component for the main game area
  */
 export default class Game extends React.Component<{}, State> {
+  private touchListenersAdded = false;
+
   constructor(props: {}) {
     super(props);
 
@@ -107,7 +109,14 @@ export default class Game extends React.Component<{}, State> {
             Restart
           </button>
         </div>
-        <div className="Grid grey lighten-3">
+        <div
+          className="Grid grey lighten-3"
+          ref={grid => {
+            if (grid) {
+              this.addTouchEventlisteners(grid);
+            }
+          }}
+        >
           {this.state.squares.map(s => (
             <div
               className={'Square ' + getSquareColor(s.value)}
@@ -148,21 +157,68 @@ export default class Game extends React.Component<{}, State> {
   }
 
   /**
+   * Add the event listeners required for touch interaction
+   * @param grid The grid element (obtained using ref prop)
+   */
+  private addTouchEventlisteners(grid: HTMLElement) {
+    if (this.touchListenersAdded) {
+      return;
+    }
+    this.touchListenersAdded = true;
+
+    let startX = 0;
+    let startY = 0;
+    let endX = 0;
+    let endY = 0;
+
+    grid.addEventListener('touchstart', ev => {
+      if (!this.state.gameover) {
+        ev.preventDefault();
+
+        const touch = ev.touches[0];
+        startX = touch.pageX;
+        startY = touch.pageY;
+      }
+    });
+
+    grid.addEventListener('touchmove', ev => {
+      if (!this.state.gameover) {
+        const touch = ev.touches[0];
+        endX = touch.pageX;
+        endY = touch.pageY;
+      }
+    });
+
+    grid.addEventListener('touchend', ev => {
+      if (!this.state.gameover) {
+        const diffX = endX - startX;
+        const diffY = endY - startY;
+
+        if (diffX * diffX + diffY * diffY > 100) {
+          if (Math.abs(diffX) > Math.abs(diffY)) {
+            if (diffX > 0) {
+              this.move(Direction.Right);
+            } else {
+              this.move(Direction.Left);
+            }
+          } else {
+            if (diffY > 0) {
+              this.move(Direction.Down);
+            } else {
+              this.move(Direction.Up);
+            }
+          }
+        }
+      }
+    });
+  }
+
+  /**
    * Reset the squares to a random starting state
    */
   private reset() {
-    const s1: Square = {
-      key: 0,
-      value: randomStartValue(),
-      x: 0,
-      y: 0
-    };
-    const s2: Square = {
-      key: 1,
-      value: randomStartValue(),
-      x: 0,
-      y: 0
-    };
+    const s1: Square = { key: 0, value: randomStartValue(), x: 0, y: 0 };
+    const s2: Square = { key: 1, value: randomStartValue(), x: 0, y: 0 };
 
     while (s1.x === s2.x && s1.y === s2.y) {
       s1.x = randomSquare();
@@ -270,22 +326,13 @@ export default class Game extends React.Component<{}, State> {
         const { key, value } = map[k];
         const [x, y] = deconCoords(k);
 
-        squares.push({
-          key,
-          value,
-          x,
-          y
-        });
+        squares.push({ key, value, x, y });
       }
     }
 
     squares.sort((a, b) => a.key - b.key);
 
-    this.setState({
-      keyAcc,
-      score,
-      squares
-    });
+    this.setState({ keyAcc, score, squares });
 
     this.checkGameover(map);
   }
