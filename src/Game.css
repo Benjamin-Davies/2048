@@ -55,6 +55,6 @@ body {
 
 @media (max-width: 600px) {
   body {
-    --grid-width: 80vh;
+    --grid-size: 80vw;
   }
 }
