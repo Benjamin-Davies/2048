@@ -14,6 +14,11 @@ class App extends React.Component {
         </main>
         <section className="container">
           <p>
+            Swipe or use the arrow keys to move the tiles around the 4&times;4
+            grid. Combine 2 tiles of the same type to form their sum. The goal
+            is to either get the highest score, or to form the 2048 tile.
+          </p>
+          <p>
             This is not an original game. I made this game to expand my skills,
             not to claim credit for the idea. You are welcome to play this game
             and to share my work.
