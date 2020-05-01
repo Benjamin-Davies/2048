@@ -1,16 +1,25 @@
 {
-  "main.css": "static/css/main.9200e968.css",
-  "main.css.map": "static/css/main.9200e968.css.map",
-  "main.js": "static/js/main.5861754c.js",
-  "main.js.map": "static/js/main.5861754c.js.map",
-  "static\\media\\Roboto-Bold.woff": "static/media/Roboto-Bold.eed9aab5.woff",
-  "static\\media\\Roboto-Bold.woff2": "static/media/Roboto-Bold.c0f1e4a4.woff2",
-  "static\\media\\Roboto-Light.woff": "static/media/Roboto-Light.ea36cd9a.woff",
-  "static\\media\\Roboto-Light.woff2": "static/media/Roboto-Light.3c37aa69.woff2",
-  "static\\media\\Roboto-Medium.woff": "static/media/Roboto-Medium.cf4d60bc.woff",
-  "static\\media\\Roboto-Medium.woff2": "static/media/Roboto-Medium.1561b424.woff2",
-  "static\\media\\Roboto-Regular.woff": "static/media/Roboto-Regular.3cf6adf6.woff",
-  "static\\media\\Roboto-Regular.woff2": "static/media/Roboto-Regular.5136cbe6.woff2",
-  "static\\media\\Roboto-Thin.woff": "static/media/Roboto-Thin.44b78f14.woff",
-  "static\\media\\Roboto-Thin.woff2": "static/media/Roboto-Thin.1f35e6a1.woff2"
+  "files": {
+    "main.css": "/2048/static/css/main.1187af23.chunk.css",
+    "main.js": "/2048/static/js/main.c8ec4b0d.chunk.js",
+    "main.js.map": "/2048/static/js/main.c8ec4b0d.chunk.js.map",
+    "runtime-main.js": "/2048/static/js/runtime-main.f77eab94.js",
+    "runtime-main.js.map": "/2048/static/js/runtime-main.f77eab94.js.map",
+    "static/css/2.658eb2da.chunk.css": "/2048/static/css/2.658eb2da.chunk.css",
+    "static/js/2.14e90a4b.chunk.js": "/2048/static/js/2.14e90a4b.chunk.js",
+    "static/js/2.14e90a4b.chunk.js.map": "/2048/static/js/2.14e90a4b.chunk.js.map",
+    "index.html": "/2048/index.html",
+    "precache-manifest.c9b0aedf1dd8cfb29b8496c0d4fcba1c.js": "/2048/precache-manifest.c9b0aedf1dd8cfb29b8496c0d4fcba1c.js",
+    "service-worker.js": "/2048/service-worker.js",
+    "static/css/2.658eb2da.chunk.css.map": "/2048/static/css/2.658eb2da.chunk.css.map",
+    "static/css/main.1187af23.chunk.css.map": "/2048/static/css/main.1187af23.chunk.css.map",
+    "static/js/2.14e90a4b.chunk.js.LICENSE.txt": "/2048/static/js/2.14e90a4b.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f77eab94.js",
+    "static/css/2.658eb2da.chunk.css",
+    "static/js/2.14e90a4b.chunk.js",
+    "static/css/main.1187af23.chunk.css",
+    "static/js/main.c8ec4b0d.chunk.js"
+  ]
 }
