@@ -125,7 +125,7 @@ export default class Game extends React.Component<{}, State> {
                 '--num-length': ('' + s.value).length,
                 '--x': s.x,
                 '--y': s.y
-              }}
+              } as any}
             >
               {s.value}
             </div>
