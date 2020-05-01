@@ -91,7 +91,9 @@ export default class Game extends React.Component<{}, State> {
           return;
       }
 
-      e.preventDefault();
+      if (!e.altKey && !e.metaKey) {
+        e.preventDefault();
+      }
       this.move(dir);
     });
 
