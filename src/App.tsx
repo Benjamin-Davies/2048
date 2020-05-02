@@ -19,9 +19,8 @@ class App extends React.Component {
             is to either get the highest score, or to form the 2048 tile.
           </p>
           <p>
-            This is not an original game. I made this game to expand my skills,
-            not to claim credit for the idea. You are welcome to play this game
-            and to share my work.
+            I made this game clone a while ago now. I have re-visited it to fix a couple of bugs but overall it is the same as it was in 2017. I would appreciate it if you checked out some of my{' '}
+            <a href="/">more recent projects.</a>
           </p>
         </section>
         <footer className="page-footer blue">
@@ -29,9 +28,6 @@ class App extends React.Component {
             <div className="row">
               <div className="col l6 s12">
                 <h5 className="white-text">Credits</h5>
-                <p className="grey-text text-lighten-4">
-                  This is not an original game.
-                </p>
                 <p className="grey-text text-lighten-4">
                   Made using React and Materialize.
                 </p>
@@ -58,14 +54,6 @@ class App extends React.Component {
                   <li>
                     <a
                       className="grey-text text-lighten-3"
-                      href="https://gabrielecirulli.github.io/2048/"
-                    >
-                      Original Game
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="grey-text text-lighten-3"
                       href="https://reactjs.org/"
                     >
                       React
@@ -85,7 +73,7 @@ class App extends React.Component {
           </div>
           <div className="footer-copyright">
             <div className="container">
-              © 2017 Benjamin Davies - Free for use under MIT liscence
+              © 2017 Benjamin Davies
               <a
                 className="grey-text text-lighten-4 right"
                 href="https://benjamin-davies.github.io/"
